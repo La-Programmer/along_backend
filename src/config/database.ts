@@ -1,10 +1,11 @@
 import dotenv from 'dotenv';
-import mongoose from 'mongoose';
-import mongoos, { mongo } from 'mongoose';
+import mongoose, { mongo } from 'mongoose';
 
 dotenv.config();
 
+const apiKey: string = process.env.MONGO_URL! 
+
 mongoose
-  .connect(process.env.MONGO_URL)
+  .connect(apiKey)
   .then(() => console.log('Connected to database'))
   .catch((err) => console.log(err));
