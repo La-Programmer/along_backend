@@ -28,20 +28,20 @@ class UserService {
     // HASH PASSWORD AND STORE IN DATABASE OR RAISE AN ERROR IF ONE OCCURS
     bcrypt.hash(userData.password, saltRounds, (err, hash) => {
       if (err) { throw new Error(`Error: ${err}`); }
-      userData.password = hash;      
+      console.log("HASHED PASSWORD", hash);
+      userData.password = hash;
+      console.log("UPDATED PASSWORD", userData.password);
+      const newUser = new User({ ...userData });
+      try {
+        newUser.save()
+        .then(() => newUser)
+        .catch((err) => {
+          throw new Error(err)
+        });
+      } catch (error) {
+        console.log(error);
+      }
     });
-
-    const newUser = new User({ ...userData });
-
-    try {
-      newUser.save()
-      .then(() => newUser)
-      .catch((err) => {
-        throw new Error(err)
-      });
-    } catch (error) {
-      console.log(error);
-    }
   }
 
   static getUser(userNameOrEmail: string) {

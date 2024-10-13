@@ -28,7 +28,7 @@ class UserController {
       })
       .catch(err => {
         console.log(err);
-        response.status(400).send({error: err});
+        response.status(400).send({error: err.message});
       });
 
   }
