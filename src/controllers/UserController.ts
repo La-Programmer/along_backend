@@ -7,6 +7,7 @@ class UserController {
    */
 
   static async registerUser (request: express.Request, response: express.Response) {
+
     const { userName, firstName, lastName, email, password } = request.body;
 
     if (!userName) { return response.status(400).send({error: 'Missing username'}) }
@@ -15,18 +16,20 @@ class UserController {
 
     if (!password) { return response.status(400).send({error: 'Missing password'}) }
 
-    try {
-      UserService.createNewUser({
-        userName,
-        firstName,
-        lastName,
-        email,
-        password
+    UserService.createNewUser({
+      userName,
+      firstName,
+      lastName,
+      email,
+      password
+    })
+      .then(() => {
+        response.status(200).send({message: 'User registered successfully'});
+      })
+      .catch(err => {
+        console.log(err);
+        response.status(400).send({error: err});
       });
-      response.status(200).send({message: 'User registered successfully'});
-    } catch (err) {
-      response.status(400).send({error: err});
-    }
 
   }
 }

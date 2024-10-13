@@ -31,13 +31,17 @@ class UserService {
       userData.password = hash;      
     });
 
-    const newUser = new User({ userData });
+    const newUser = new User({ ...userData });
 
-    newUser.save()
+    try {
+      newUser.save()
       .then(() => newUser)
       .catch((err) => {
         throw new Error(err)
       });
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   static getUser(userNameOrEmail: string) {

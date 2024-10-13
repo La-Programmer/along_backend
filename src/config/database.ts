@@ -3,9 +3,19 @@ import mongoose, { mongo } from 'mongoose';
 
 dotenv.config();
 
-const apiKey: string = process.env.MONGO_URL! 
+const uri: string = process.env.MONGO_URL! 
 
-mongoose
-  .connect(apiKey)
-  .then(() => console.log('Connected to database'))
-  .catch((err) => console.log(err));
+const connectToDb  = async () => {
+  try {
+    await mongoose.connect(uri);
+    console.log("Connected 2 to the DB");
+
+    const collections = await mongoose.connection.db!.listCollections().toArray();
+    console.log('Collections in the database:', collections);
+
+  } catch (error) {
+    console.error('Error connecting to the database:', error);
+  }
+};
+
+export default connectToDb;

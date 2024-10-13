@@ -6,11 +6,11 @@ import UserController from '../controllers/UserController';
 function controllerRouting(app: Application) {
   const router = express.Router();
   app.use('/', router);
-
   // User Controller for user endpoints
 
   // Register a new user
   router.post('/register', (req, res) => {
+    console.log("Request body", req.body);
     UserController.registerUser(req, res);
   })
 
