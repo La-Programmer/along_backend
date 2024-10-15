@@ -1,13 +1,6 @@
-import User, { IUser } from "../models/user";
+import User from "../models/user";
 import bcrypt from "bcrypt";
-
-export interface IUserCreation {
-  userName: string;
-  firstName: string;
-  lastName: string;
-  email: string;
-  password: string;
-};
+import { IUserCreation } from "../types/user";
 
 const saltRounds: number = 14;
 
@@ -31,6 +24,7 @@ class UserService {
       console.log("HASHED PASSWORD", hash);
       userData.password = hash;
       console.log("UPDATED PASSWORD", userData.password);
+      delete userData.confirmPassword
       const newUser = new User({ ...userData });
       try {
         newUser.save()

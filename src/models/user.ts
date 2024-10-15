@@ -1,24 +1,38 @@
 import { Schema, model, Document } from "mongoose";
-
-// Interface representation of User document object
-export interface IUser extends Document{
-  userName: string;
-  firstName: string;
-  lastName: string;
-  email: string;
-  is_verified: boolean;
-  password: string;
-  created_at: Date;
-  updated_at: Date;
-}
+import { IUser } from "../types/user";
 
 const UserSchema: Schema<IUser> = new Schema({
-  userName: {type: String, required: true, unique: true},
-  firstName: {type: String},
-  lastName: {type: String},
-  email: {type: String, required: true, unique: true},
-  is_verified: {type: Boolean, required: true, default: false},
-  password: {type: String, required: true},
+  userName: {
+    type: String,
+    required: true,
+    unique: true
+  },
+  firstName: {
+    type: String
+  },
+  lastName: {
+    type: String
+  },
+  email: {
+    type: String,
+    required: [true, "Kindly provide a valid email"],
+    unique: true,
+  },
+  is_verified: {
+    type: Boolean,
+    required: true,
+    default: false
+  },
+  role: {
+    type: String,
+    required: true,
+    enum: ['admin', 'blogger', 'user'],
+    default: 'user'
+  },
+  password: {
+    type: String,
+    required: [true, "Kindly provide a strong password"]
+  }
 }, {
   timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' }
 })
