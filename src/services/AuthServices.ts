@@ -61,7 +61,7 @@ class AuthService {
     console.log('USER', user);
     const result = {
       ...user,
-      accessTokentoken: accessToken,
+      accessToken: accessToken,
       refreshToken: refreshToken
     }
 
