@@ -28,6 +28,7 @@ class AuthController {
         response.status(401).send(error.message);
       })
   }
+  
 }
 
 export default AuthController;
