@@ -31,6 +31,7 @@
     "mongoose": "^8.0.4",
     "pg": "^8.13.0",
     "pg-hstore": "^2.3.4",
+    "redis": "^4.7.0",
     "sequelize": "^6.37.4",
     "touch-cli": "^0.0.1"
   }

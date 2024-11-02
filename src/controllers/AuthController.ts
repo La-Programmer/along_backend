@@ -12,7 +12,7 @@ class AuthController {
     const name = email || userName;
 
     if (!name) {
-      response.status(400).send('Please input email or username');
+      response.status(400).json({ error: 'Please input email or username' });
     }
 
     console.log('NAME', name);
@@ -27,6 +27,14 @@ class AuthController {
         console.log('ERROR', error);
         response.status(401).send(error.message);
       })
+  }
+
+  static async logoutUser (request: any, response: any) {
+
+    await AuthService.deleteRefreshTokenFromRedis(request.user._id)
+
+    response.status(204).send();
+
   }
 }
 

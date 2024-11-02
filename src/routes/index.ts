@@ -1,7 +1,7 @@
 import express, { Application } from 'express';
-import authMiddleware from '../middlewares/jwtMiddleWare';
 import AuthController from '../controllers/AuthController';
 import UserController from '../controllers/UserController';
+import { authenticateAccessToken, authenticateRefreshToken } from '../middlewares/AuthMiddleWare';
 
 function controllerRouting(app: Application) {
   const router = express.Router();
