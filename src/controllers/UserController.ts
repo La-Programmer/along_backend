@@ -11,18 +11,18 @@ class UserController {
 
     const { userName, firstName, lastName, email, password, confirmPassword } = request.body;
     
-    if (!userName) { return response.status(400).send({error: 'Missing username'}) }
+    if (!userName) { return response.status(400).json({error: 'Missing username'}) }
     
-    if (!email) { return response.status(400).send({error: 'Missing email'}) }
+    if (!email) { return response.status(400).json({error: 'Missing email'}) }
     
-    if (!password) { return response.status(400).send({error: 'Missing password'}) }
+    if (!password) { return response.status(400).json({error: 'Missing password'}) }
     
     // VALIDATE EMAIL INPUT
-    if (!validator.isEmail(email)) { return response.status(400).send('Please input a valid email') }
+    if (!validator.isEmail(email)) { return response.status(400).json({ error: 'Please input a valid email' }) }
 
     // VALIDATE PASSWORD
     if (!validator.equals(password, confirmPassword)) {
-      return response.status(400).send('The two passwords do not match')
+      return response.status(400).json({ error: 'The two passwords do not match' })
     }
 
     UserService.createNewUser({
@@ -34,11 +34,11 @@ class UserController {
       confirmPassword
     })
       .then(() => {
-        response.status(200).send({message: 'User registered successfully'});
+        response.status(200).json({message: 'User registered successfully'});
       })
       .catch(err => {
         console.log(err);
-        response.status(400).send({error: err.message});
+        response.status(400).json({error: err.message});
       });
 
   }

@@ -1,6 +1,6 @@
 import User from "../models/user";
 import bcrypt from "bcrypt";
-import { IUserCreation } from "../types/user";
+import { IUser, IUserCreation } from "../types/user";
 
 const saltRounds: number = 14;
 
@@ -32,29 +32,41 @@ class UserService {
         .catch((err) => {
           throw new Error(err)
         });
-      } catch (error) {
+      } catch (error: any) {
         console.log(error);
+        throw new Error(error)
       }
     });
   }
 
-  static getUser(userNameOrEmail: string) {
+  static async getUser(userNameOrEmail: string) {
 
     if (!userNameOrEmail) { throw new Error('Username/Email not found'); }
 
-    const user = User.findOne({ email:userNameOrEmail })
-      .then((user) => user)
-      .catch((err) => {
-        // Log the actual err
-        throw new Error('Email not found');
-      }) || User.findOne({ userName:userNameOrEmail })
-      .then((user) => user)
-      .catch((err) => {
-        // Log the actual err
-        throw new Error('Email not found');
-      }); 
+    const [userByEmail, userByUsername] = await Promise.all([
+      User.findOne({ email: userNameOrEmail }),
+      User.findOne({ userName: userNameOrEmail }),
+    ]);
 
-    return user;
+    if (userByEmail) {
+      return userByEmail;
+    } else if (userByUsername) {
+      return userByUsername;
+    } else {
+      throw new Error('User not found');
+    } 
+
+  }
+
+  static async updateUserby(email: string, key: string, value: any) {
+    try {
+      await User.updateOne(
+        { email: email },
+        { $set: { [key]: "value" } }
+      );
+    } catch (error: any) {
+      throw new Error(error);
+    }
   }
 }
 

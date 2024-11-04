@@ -36,6 +36,7 @@ class AuthController {
     response.status(204).send();
 
   }
+  
 }
 
 export default AuthController;

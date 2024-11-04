@@ -1,5 +1,5 @@
 import dotenv from 'dotenv';
-import mongoose, { mongo } from 'mongoose';
+import mongoose from 'mongoose';
 
 dotenv.config();
 
@@ -8,7 +8,7 @@ const uri: string = process.env.MONGO_URL!
 const connectToDb  = async () => {
   try {
     await mongoose.connect(uri);
-    console.log("Connected 2 to the DB");
+    console.log("Connected to the DB");
 
     const collections = await mongoose.connection.db!.listCollections().toArray();
     console.log('Collections in the database:', collections);

@@ -18,7 +18,9 @@ const port = process.env.PORT || 3000;
 
 controllerRouting(app);
 
-app.listen(port, () => {
-  connectToDb();
+app.listen(port, async () => {
+  await connectToDb();
   console.log(`Server is up and running on port ${port}`);
 })
+
+export default app
